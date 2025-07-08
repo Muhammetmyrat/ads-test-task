@@ -1,0 +1,10 @@
+.campaign-table {
+	&__empty {
+		width: 100%;
+		padding: 20px;
+		font-family: $fontFamilySecond;
+		text-align: center;
+		font-size: 20px;
+		color: var(--colors-text-primary);
+	}
+}

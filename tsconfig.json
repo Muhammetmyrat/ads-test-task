@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+
+    "strict": true,
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "sourceMap": true,
+    "declaration": false,
+    "removeComments": true,
+
+    "allowSyntheticDefaultImports": true,
+    "incremental": true,
+
+    "types": ["vite/client", "node"],
+
+    "paths": {
+      "@/*": ["src/*"],
+      "~/*": ["src/*"],
+      "*": ["*", "src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "vite.config.ts"]
+}

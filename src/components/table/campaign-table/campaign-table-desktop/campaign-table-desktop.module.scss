@@ -1,0 +1,183 @@
+.campaign-table {
+	&__desktop {
+		display: block;
+
+		@media (max-width: $mobile) {
+			display: none;
+		}
+	}
+
+	&__table {
+		width: 100%;
+		border-collapse: collapse;
+		background: var(--base-neutral-white);
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	&__header-cell {
+		height: 50px;
+		padding-top: 8px;
+		padding-right: 8px;
+		padding-bottom: 8px;
+		padding-left: 12px;
+		position: relative;
+
+		&:first-child {
+			padding-left: 24px;
+		}
+
+		&--sortable {
+			cursor: pointer;
+			user-select: none;
+		}
+
+		&:hover {
+			background-color: var(--colors-fill-footer);
+		}
+	}
+
+	&__header-content {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		text-align: left;
+		font-family: $fontFamilySecond;
+		font-weight: 500;
+		font-style: Medium;
+		font-size: 14px;
+		line-height: 16px;
+		letter-spacing: 0px;
+		vertical-align: middle;
+		color: var(--text-secondary);
+	}
+
+	&__sort-icon {
+		transition: color 0.2s ease;
+
+		&--active {
+			color: var(--base-accent-primary-500);
+			font-weight: bold;
+		}
+
+		&:hover {
+			color: var(--base-accent-primary-500);
+		}
+	}
+
+	&__info {
+		width: 20px;
+		height: 20px;
+		cursor: help;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid var(--colors-stroke-primary);
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		-ms-border-radius: 50%;
+		-o-border-radius: 50%;
+
+		span {
+			color: var(--neutral-grey-1);
+		}
+	}
+
+	&__row {
+		border-top: 1px solid var(--neutral-gray-920);
+		transition: background-color 0.3s ease;
+		-webkit-transition: background-color 0.3s ease;
+		-moz-transition: background-color 0.3s ease;
+		-ms-transition: background-color 0.3s ease;
+		-o-transition: background-color 0.3s ease;
+
+		&:hover {
+			background-color: var(--colors-fill-footer);
+		}
+	}
+
+	&__cell {
+		height: 44px;
+		padding-top: 10px;
+		padding-right: 8px;
+		padding-bottom: 10px;
+		padding-left: 12px;
+		font-family: $fontFamilySecond;
+		font-weight: 400;
+		font-style: Regular;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0px;
+		vertical-align: middle;
+		width: max-content;
+
+		&:first-child {
+			padding-left: 24px;
+		}
+
+		&:last-child {
+			padding-right: 24px;
+		}
+	}
+
+	&__campaign-name {
+		font-family: $fontFamilySecond;
+		font-weight: 400;
+		font-style: Regular;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0px;
+		vertical-align: middle;
+		color: var(--base-accent-primary-500) !important;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__status {
+		width: 50px;
+		height: 24px;
+		padding-top: 4px;
+		padding-right: 8px;
+		padding-bottom: 4px;
+		padding-left: 8px;
+		border-radius: 4px;
+		font-family: $fontFamilySecond;
+		font-weight: 400;
+		font-style: Regular;
+		font-size: 12px;
+		line-height: 16px;
+		letter-spacing: 0%;
+
+		&--active {
+			background: var(--base-accent-success-200);
+			color: var(--base-accent-success-900);
+		}
+
+		&--warning {
+			background: var(--base-accent-warning-200);
+			color: var(--base-accent-warning-900);
+		}
+
+		&--paused {
+			background: var(--base-accent-danger-200);
+			color: var(--base-accent-danger-900);
+		}
+	}
+
+	&__cpd {
+		width: max-content;
+
+		span {
+			color: var(--base-accent-primary-500);
+		}
+	}
+
+	&__delete-btn {
+		span {
+			color: var(--base-accent-primary-500);
+		}
+	}
+}

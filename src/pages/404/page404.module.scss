@@ -1,0 +1,40 @@
+.page404 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: $fontFamilySecond;
+
+  &__code {
+    font-size: 8rem;
+    font-weight: bold;
+    color: var(--base-accent-danger-900);
+  }
+
+  &__message {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  &__description {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  &__link {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    color: var(--base-accent-primary-500);
+    text-decoration: none;
+    border: 2px solid var(--base-accent-primary-500);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--base-accent-primary-500);
+      color: var(--base-neutral-white);
+    }
+  }
+}

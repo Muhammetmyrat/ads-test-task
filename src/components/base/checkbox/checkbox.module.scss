@@ -1,0 +1,48 @@
+.checkbox {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	user-select: none;
+
+	&__input {
+		display: none;
+	}
+
+	&__icon {
+		color: var(--Text-2-color);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__title {
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0px;
+		text-transform: capitalize;
+		padding-left: 8px;
+	}
+
+	&--active {
+		.checkbox__icon {
+			color: var(--Primary-blue-color);
+		}
+	}
+
+	&--disabled {
+		cursor: not-allowed;
+		pointer-events: all !important;
+		opacity: 0.7;
+	}
+
+	&--error {
+		.checkbox__icon {
+			color: var(--error-color);
+		}
+	}
+
+	&--readonly {
+		pointer-events: none;
+	}
+}

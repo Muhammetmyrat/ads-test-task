@@ -1,0 +1,112 @@
+.campaign-table {
+	&__mobile {
+		display: none;
+
+		@media (max-width: $mobile) {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			overflow-x: auto;
+		}
+	}
+
+	&__card {
+		width: 100%;
+		padding-top: 14px;
+		padding-right: 20px;
+		padding-bottom: 14px;
+		padding-left: 20px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+
+		&:not(:first-child) {
+			border-top: 1px solid var(--colors-stroke-primary);
+		}
+	}
+
+	&__card-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	&__card-title {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		flex: 1 1 auto;
+
+		h3 {
+			font-family: $fontFamilySecond;
+			font-weight: 400;
+			font-style: Regular;
+			font-size: 14px;
+			line-height: 20px;
+			letter-spacing: 0px;
+			vertical-align: middle;
+			color: var(--base-accent-primary-500);
+		}
+	}
+
+	&__card-toggle {
+		&:hover {
+			color: var(--base-accent-primary-500);
+		}
+	}
+
+	&__card-body {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__card-content {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__card-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 10px;
+	}
+
+	&__card-label {
+		font-family: $fontFamilySecond;
+		font-weight: 400;
+		font-style: Regular;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0px;
+		vertical-align: middle;
+		color: var(--text-secondary);
+	}
+
+	&__card-value {
+		font-family: $fontFamilySecond;
+		font-weight: 400;
+		font-style: Regular;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0px;
+		vertical-align: middle;
+	}
+
+	&__card-actions {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	&__delete-btn {
+		span {
+			color: var(--base-accent-primary-500);
+		}
+	}
+}

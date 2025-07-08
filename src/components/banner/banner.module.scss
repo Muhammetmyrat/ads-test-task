@@ -1,0 +1,149 @@
+.banner {
+	width: 100%;
+
+	&__wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 64px 0;
+
+		@media screen and (max-width: $mobile) {
+			flex-direction: column;
+			padding: 50px 0;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		max-width: 482px;
+
+		@media screen and (max-width: $mobile) {
+			max-width: 100%;
+		}
+	}
+
+	&__title {
+		font-weight: 700;
+		font-size: 36px;
+		line-height: 44px;
+
+		@media screen and (max-width: $mobile) {
+			font-size: 28px;
+			line-height: 40px;
+		}
+	}
+
+	&__subtitle {
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 24px;
+
+		@media screen and (max-width: $mobile) {
+			font-size: 14px;
+			line-height: 20px;
+		}
+	}
+
+	&__stats {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 47px;
+
+		@media screen and (max-width: $mobile) {
+			flex-direction: column;
+			width: 100%;
+			gap: 10px;
+		}
+	}
+
+	&__statItems {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+
+		@media screen and (max-width: $mobile) {
+			padding-bottom: 10px;
+			gap: 0;
+
+			&:not(:last-child) {
+				border-bottom: 1px solid #a8acae;
+			}
+		}
+	}
+
+	&__statItem {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+
+		@media screen and (max-width: $mobile) {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+	}
+
+	&__statTitle {
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 24px;
+
+		@media screen and (max-width: $mobile) {
+			color: var(--neutral-grey-1);
+		}
+	}
+
+	&__statValue {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+
+		span {
+			font-weight: 600;
+			font-size: 24px;
+			line-height: 32px;
+
+			@media screen and (max-width: $mobile) {
+				font-size: 20px;
+				text-align: right;
+				color: var(--colors-text-primary);
+			}
+		}
+	}
+
+	&__statChange {
+		display: flex;
+		align-items: center;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 24px;
+
+		@media screen and (max-width: $mobile) {
+			color: var(--neutral-grey-1);
+		}
+
+		&--up span {
+			color: var(--base-accent-success-500);
+		}
+
+		&--down span {
+			color: var(--base-accent-danger-500);
+			transform: rotateX(180deg);
+		}
+	}
+
+	&__statDescription {
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 24px;
+		color: var(--colors-text-secondary);
+
+		@media screen and (max-width: $mobile) {
+			color: #7a8185;
+		}
+	}
+}
