@@ -12,7 +12,7 @@ export interface Campaign {
 }
 
 export type SortField = 'name' | 'status' | 'cpd' | 'spendings' | 'impressions' | 'clicks' | 'ctr'
-export type SortDirection = 'asc' | 'desc' | null
+export type SortDirection = 'asc' | 'desc'
 
 interface SortState {
 	field: SortField | null
@@ -111,7 +111,7 @@ const initialState: CampaignState = {
 	list: defaultCampaigns,
 	sort: {
 		field: null,
-		direction: null
+		direction: 'asc'
 	}
 }
 
@@ -125,7 +125,7 @@ const sortCampaigns = (
 	field: SortField,
 	direction: SortDirection
 ): Campaign[] => {
-	if (!field || !direction) return campaigns
+	if (!field) return campaigns
 
 	return [...campaigns].sort((a, b) => {
 		let aValue: string | number = a[field]
@@ -154,7 +154,7 @@ export const campaignSlice = createSlice({
 	reducers: {
 		addCampaign: (state, action: PayloadAction<Campaign>) => {
 			state.list.unshift(action.payload)
-			if (state.sort.field && state.sort.direction) {
+			if (state.sort.field) {
 				state.list = sortCampaigns(state.list, state.sort.field, state.sort.direction)
 			}
 		},
@@ -165,24 +165,17 @@ export const campaignSlice = createSlice({
 			const field = action.payload
 
 			if (state.sort.field === field) {
-				if (state.sort.direction === 'asc') {
-					state.sort.direction = 'desc'
-				} else if (state.sort.direction === 'desc') {
-					state.sort.field = null
-					state.sort.direction = null
-				}
+				state.sort.direction = state.sort.direction === 'asc' ? 'desc' : 'asc'
 			} else {
 				state.sort.field = field
 				state.sort.direction = 'asc'
 			}
 
-			if (state.sort.field && state.sort.direction) {
-				state.list = sortCampaigns(state.list, state.sort.field, state.sort.direction)
-			}
+			state.list = sortCampaigns(state.list, state.sort.field, state.sort.direction)
 		},
 		clearSort: state => {
 			state.sort.field = null
-			state.sort.direction = null
+			state.sort.direction = 'asc'
 			state.list = [...defaultCampaigns]
 		}
 	}

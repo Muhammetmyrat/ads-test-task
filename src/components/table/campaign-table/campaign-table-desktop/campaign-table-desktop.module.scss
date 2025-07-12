@@ -53,11 +53,18 @@
 	}
 
 	&__sort-icon {
-		transition: color 0.2s ease;
-
+		transition: all 0.3s ease;
 		&--active {
 			color: var(--base-accent-primary-500);
 			font-weight: bold;
+		}
+
+		&--active {
+			opacity: 1;
+		}
+
+		&--desc {
+			transform: rotate(180deg);
 		}
 
 		&:hover {

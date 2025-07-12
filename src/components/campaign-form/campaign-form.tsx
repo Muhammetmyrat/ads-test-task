@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { addCampaign } from '@/store/campaign-store'
 import Input from '@/components/base/input/input'
-import Dropdown from '@/components/base/dropdown/dropdown'
+import Dropdown, { type DropdownItem } from '@/components/base/dropdown/dropdown'
 import Checkbox from '@/components/base/checkbox/checkbox'
 import Modal from '@/components/modal/modal'
 import styles from './campaign-form.module.scss'
@@ -12,100 +12,138 @@ interface CampaignFormProps {
 	onClose: () => void
 }
 
-const initialFormState = {
+interface FormData {
+	name: string
+	language: string
+	ratings: string[]
+}
+
+interface ValidationErrors {
+	name: boolean
+	language: boolean
+}
+
+const LANGUAGE_OPTIONS: DropdownItem[] = [
+	{ value: 'en', label: 'English' },
+	{ value: 'ru', label: 'Russian' },
+	{ value: 'es', label: 'Spanish' },
+	{ value: 'fr', label: 'French' },
+	{ value: 'de', label: 'German' },
+	{ value: 'it', label: 'Italian' },
+	{ value: 'pt', label: 'Portuguese' },
+	{ value: 'zh', label: 'Chinese' }
+]
+
+const RATING_OPTIONS = [
+	{ id: 'gambling', label: 'Gambling' },
+	{ id: 'adults', label: 'Adults (18+)' },
+	{ id: 'investments', label: 'Investments' },
+	{ id: 'risky', label: 'Risky Project' }
+] as const
+
+const INITIAL_FORM_DATA: FormData = {
 	name: '',
 	language: '',
-	ratings: [] as string[]
+	ratings: []
+}
+
+const INITIAL_ERRORS: ValidationErrors = {
+	name: false,
+	language: false
 }
 
 const CampaignForm: React.FC<CampaignFormProps> = ({ show, onClose }) => {
 	const dispatch = useDispatch()
-
-	const [formData, setFormData] = useState(initialFormState)
-	const [errors, setErrors] = useState({ name: false, language: false })
-
-	const languages = useMemo(
-		() => [
-			{ value: 'en', label: 'English' },
-			{ value: 'ru', label: 'Russian' },
-			{ value: 'es', label: 'Spanish' },
-			{ value: 'fr', label: 'French' }
-		],
-		[]
-	)
-
-	const ratingOptions = useMemo(
-		() => [
-			{ id: 'gambling', label: 'Gambling' },
-			{ id: 'adults', label: 'Adults (18+)' },
-			{ id: 'investments', label: 'Investments' },
-			{ id: 'risky', label: 'Risky Project' }
-		],
-		[]
-	)
+	const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA)
+	const [errors, setErrors] = useState<ValidationErrors>(INITIAL_ERRORS)
+	const [isSubmitting, setIsSubmitting] = useState(false)
 
 	const resetForm = useCallback(() => {
-		setFormData(initialFormState)
-		setErrors({ name: false, language: false })
+		setFormData(INITIAL_FORM_DATA)
+		setErrors(INITIAL_ERRORS)
+		setIsSubmitting(false)
 	}, [])
 
-	const validateForm = () => {
-		const newErrors = {
+	useEffect(() => {
+		if (!show) {
+			resetForm()
+		}
+	}, [show, resetForm])
+
+	const validate = useCallback((): boolean => {
+		const validationErrors: ValidationErrors = {
 			name: !formData.name.trim(),
 			language: !formData.language
 		}
-		setErrors(newErrors)
-		return !Object.values(newErrors).some(Boolean)
-	}
+		setErrors(validationErrors)
+		return !Object.values(validationErrors).some(Boolean)
+	}, [formData])
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target
-		setFormData(prev => ({ ...prev, [name]: value }))
-		setErrors(prev => ({ ...prev, [name]: false }))
-	}
+	const handleInputChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const { name, value } = e.target
+			setFormData(prev => ({ ...prev, [name]: value }))
+			if (errors[name as keyof ValidationErrors]) {
+				setErrors(prev => ({ ...prev, [name]: false }))
+			}
+		},
+		[errors]
+	)
 
-	const handleLanguageSelect = (value: string) => {
-		setFormData(prev => ({ ...prev, language: value }))
+	const handleLanguageSelect = useCallback((language: DropdownItem) => {
+		setFormData(prev => ({ ...prev, language: language.value as string }))
 		setErrors(prev => ({ ...prev, language: false }))
-	}
+	}, [])
 
-	const handleRatingToggle = (id: string) => {
+	const toggleRating = useCallback((id: string) => {
 		setFormData(prev => {
-			const list = prev.ratings.includes(id)
+			const ratings = prev.ratings.includes(id)
 				? prev.ratings.filter(r => r !== id)
 				: [...prev.ratings, id]
-			return { ...prev, ratings: list }
+			return { ...prev, ratings }
 		})
-	}
+	}, [])
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault()
-		if (!validateForm()) return
+	const handleSubmit = useCallback(
+		async (e: React.FormEvent) => {
+			e.preventDefault()
 
-		dispatch(
-			addCampaign({
-				id: Math.floor(Math.random() * 1_000_000),
-				name: formData.name,
-				status: 'Active',
-				cpd: '0.00067627',
-				spendings: '0.00',
-				impressions: '0',
-				clicks: '0',
-				ctr: '0%'
-			})
-		)
+			if (!validate() || isSubmitting) return
 
-		onClose()
-		resetForm()
-	}
+			setIsSubmitting(true)
 
-	useEffect(() => {
-		if (!show) resetForm()
-	}, [show, resetForm])
+			try {
+				const campaignId = Date.now() + Math.floor(Math.random() * 1000)
+
+				dispatch(
+					addCampaign({
+						id: campaignId,
+						name: formData.name.trim(),
+						status: 'Active',
+						cpd: '0.00067627',
+						spendings: '0.00',
+						impressions: '0',
+						clicks: '0',
+						ctr: '0%'
+					})
+				)
+
+				onClose()
+				resetForm()
+			} catch (error) {
+				console.error('Error creating campaign:', error)
+			} finally {
+				setIsSubmitting(false)
+			}
+		},
+		[formData, validate, isSubmitting, dispatch, onClose, resetForm]
+	)
+
+	const selectedLanguage = LANGUAGE_OPTIONS.find(lang => lang.value === formData.language) || null
 
 	return (
 		<Modal show={show} onClose={onClose} onConfirm={handleSubmit} title="Create New Campaign">
-			<form className={styles.form}>
+			<form className={styles.form} onSubmit={handleSubmit}>
 				<div className={styles.form__group}>
 					<Input
 						label="Campaign name"
@@ -114,6 +152,8 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ show, onClose }) => {
 						onChange={handleInputChange}
 						placeholder="Enter campaign name"
 						error={errors.name}
+						disabled={isSubmitting}
+						required
 					/>
 				</div>
 
@@ -121,23 +161,28 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ show, onClose }) => {
 					<Dropdown
 						label="Language"
 						placeholder="Choose language"
-						items={languages}
-						selectedValue={formData.language}
-						onSelect={handleLanguageSelect}
+						items={LANGUAGE_OPTIONS}
+						selectedItem={selectedLanguage}
+						onSelectItem={handleLanguageSelect}
 						error={errors.language}
+						disabled={isSubmitting}
 					/>
 				</div>
 
 				<div className={styles.form__group}>
-					<label className={styles.form__label}>Ratings</label>
+					<label className={styles.form__label}>
+						Ratings
+						<span className={styles.form__label_optional}>(Optional)</span>
+					</label>
 					<div className={styles.form__ratings}>
-						{ratingOptions.map(o => (
+						{RATING_OPTIONS.map(option => (
 							<Checkbox
-								key={o.id}
-								modelValue={formData.ratings.includes(o.id)}
-								onChange={() => handleRatingToggle(o.id)}
-								title={o.label}
+								key={option.id}
+								modelValue={formData.ratings.includes(option.id)}
+								onChange={() => toggleRating(option.id)}
+								title={option.label}
 								className={styles.form__checkbox}
+								disabled={isSubmitting}
 							/>
 						))}
 					</div>

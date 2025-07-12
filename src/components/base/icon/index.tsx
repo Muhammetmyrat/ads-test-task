@@ -8,9 +8,10 @@ type IconProps = {
 	size?: number | string
 	color?: string
 	className?: string
+	onClick?: (e: React.MouseEvent<HTMLSpanElement>) => void
 }
 
-const Icon: React.FC<IconProps> = ({ name, size, color, className }) => {
+const Icon: React.FC<IconProps> = ({ name, size, color, onClick, className }) => {
 	const svg = icons[name]
 
 	if (!svg) return null
@@ -20,6 +21,7 @@ const Icon: React.FC<IconProps> = ({ name, size, color, className }) => {
 			className={classNames(styles.icon, className)}
 			style={{ width: size, height: size, color }}
 			dangerouslySetInnerHTML={{ __html: svg }}
+			onClick={onClick}
 		/>
 	)
 }

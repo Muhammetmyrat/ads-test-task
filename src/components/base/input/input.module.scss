@@ -56,9 +56,15 @@
 				cursor: pointer;
 			}
 		}
+
+		&:focus-within {
+			border-color: var(--base-accent-primary-500);
+		}
 	}
 
 	&__error {
+		animation: $invalid-animation-name 0.3s ease-in-out;
+
 		.input__body {
 			border-color: var(--base-accent-danger-500);
 		}
@@ -67,8 +73,8 @@
 		}
 	}
 
-	&:disabled {
-		background-color: var(--colors-fill-secondary);
+	&__disabled {
 		cursor: not-allowed;
+		pointer-events: none;
 	}
 }

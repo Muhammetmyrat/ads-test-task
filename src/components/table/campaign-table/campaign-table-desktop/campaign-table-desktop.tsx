@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { removeCampaign, setSortField, SortField } from '@/store/campaign-store'
 import type { Campaign } from '@/store/campaign-store'
@@ -10,8 +10,18 @@ interface CampaignTableDesktopProps {
 	campaigns: Campaign[]
 }
 
+interface RootState {
+	campaigns: {
+		sort: {
+			field: SortField | null
+			direction: 'asc' | 'desc'
+		}
+	}
+}
+
 const CampaignTableDesktop: React.FC<CampaignTableDesktopProps> = ({ campaigns }) => {
 	const dispatch = useDispatch()
+	const sortState = useSelector((state: RootState) => state.campaigns.sort)
 
 	const handleRemoveCampaign = (id: number) => {
 		dispatch(removeCampaign(id))
@@ -26,25 +36,25 @@ const CampaignTableDesktop: React.FC<CampaignTableDesktopProps> = ({ campaigns }
 			<table className={styles['campaign-table__table']}>
 				<thead className={styles['campaign-table__header']}>
 					<tr>
-						<SortableHeader field="name" onClick={handleSort}>
+						<SortableHeader field="name" onClick={handleSort} sortState={sortState}>
 							Campaign
 						</SortableHeader>
-						<SortableHeader field="status" onClick={handleSort}>
+						<SortableHeader field="status" onClick={handleSort} sortState={sortState}>
 							Status
 						</SortableHeader>
 						<th className={styles['campaign-table__header-cell']}>
 							<div className={styles['campaign-table__header-content']}>Payment model</div>
 						</th>
-						<SortableHeader field="spendings" onClick={handleSort} hasInfo>
+						<SortableHeader field="spendings" onClick={handleSort} sortState={sortState} hasInfo>
 							Spendings
 						</SortableHeader>
-						<SortableHeader field="impressions" onClick={handleSort} hasInfo>
+						<SortableHeader field="impressions" onClick={handleSort} sortState={sortState} hasInfo>
 							Impressions
 						</SortableHeader>
-						<SortableHeader field="clicks" onClick={handleSort} hasInfo>
+						<SortableHeader field="clicks" onClick={handleSort} sortState={sortState} hasInfo>
 							Clicks
 						</SortableHeader>
-						<SortableHeader field="ctr" onClick={handleSort} hasInfo>
+						<SortableHeader field="ctr" onClick={handleSort} sortState={sortState} hasInfo>
 							CTR
 						</SortableHeader>
 						<th className={styles['campaign-table__header-cell']}></th>
@@ -63,6 +73,7 @@ const CampaignTableDesktop: React.FC<CampaignTableDesktopProps> = ({ campaigns }
 interface SortableHeaderProps {
 	field: SortField
 	onClick: (field: SortField) => void
+	sortState: { field: SortField | null; direction: 'asc' | 'desc' }
 	children: React.ReactNode
 	hasInfo?: boolean
 }
@@ -70,22 +81,32 @@ interface SortableHeaderProps {
 const SortableHeader: React.FC<SortableHeaderProps> = ({
 	field,
 	onClick,
+	sortState,
 	children,
 	hasInfo = false
-}) => (
-	<th
-		className={`${styles['campaign-table__header-cell']} ${styles['campaign-table__header-cell--sortable']}`}
-		onClick={() => onClick(field)}
-	>
-		<div className={styles['campaign-table__header-content']}>
-			{children}
-			{hasInfo && <span className={styles['campaign-table__info']}>?</span>}
-			<span className={styles['campaign-table__sort-icon']}>
-				<Icon name="chevron" />
-			</span>
-		</div>
-	</th>
-)
+}) => {
+	const isActive = sortState.field === field
+	const isDescending = isActive && sortState.direction === 'asc'
+
+	return (
+		<th
+			className={`${styles['campaign-table__header-cell']} ${styles['campaign-table__header-cell--sortable']}`}
+			onClick={() => onClick(field)}
+		>
+			<div className={styles['campaign-table__header-content']}>
+				{children}
+				{hasInfo && <span className={styles['campaign-table__info']}>?</span>}
+				<span
+					className={`${styles['campaign-table__sort-icon']} ${
+						isActive ? styles['campaign-table__sort-icon--active'] : ''
+					} ${isDescending ? styles['campaign-table__sort-icon--desc'] : ''}`}
+				>
+					<Icon name="chevron" />
+				</span>
+			</div>
+		</th>
+	)
+}
 
 interface CampaignRowProps {
 	campaign: Campaign
