@@ -198,88 +198,90 @@ const Dropdown: React.FC<DropdownProps> = ({
 		<div className={dropdownClasses} ref={dropdownRef}>
 			{label && <div className={styles.dropdown__label}>{label}</div>}
 
-			<div
-				className={classNames(styles.dropdown__button, {
-					[styles.dropdown__button_self]: searchableSelf
-				})}
-				onClick={handleDropdownClick}
-				role="button"
-				tabIndex={canInteract ? 0 : -1}
-				aria-expanded={showDropdown}
-				aria-haspopup="listbox"
-			>
-				{searchableSelf ? (
-					<input
-						className={styles.dropdown__search_self}
-						value={displayValue}
-						autoFocus
-						onChange={handleSearchableSelfChange}
-						placeholder={placeholder}
-						disabled={disabled}
-						readOnly={readonly}
-						onClick={handleSearchableSelfClick}
-					/>
-				) : (
-					<p className={shouldShowPlaceholder ? styles.dropdown__placeholder : ''}>{displayValue}</p>
-				)}
-
-				{countable && checkedCount > 0 && <div className={styles.dropdown__count}>{checkedCount}</div>}
-
-				{!disabled && <Icon onClick={handleChevronClick} name="chevron" />}
-			</div>
-
-			{showDropdown && (
+			<div className={styles.dropdown__body}>
 				<div
-					className={styles.dropdown__menu}
-					ref={dropdownMenuRef}
-					style={{ width: menuWidth }}
-					role="listbox"
+					className={classNames(styles.dropdown__button, {
+						[styles.dropdown__button_self]: searchableSelf
+					})}
+					onClick={handleDropdownClick}
+					role="button"
+					tabIndex={canInteract ? 0 : -1}
+					aria-expanded={showDropdown}
+					aria-haspopup="listbox"
 				>
-					<div className={styles.dropdown__list}>
-						{searchable && !searchableSelf && (
-							<div className={styles.dropdown__search}>
-								<input
-									type="text"
-									value={search}
-									placeholder="Search..."
-									onChange={handleRegularSearchChange}
-									autoFocus
-								/>
-							</div>
-						)}
+					{searchableSelf ? (
+						<input
+							className={styles.dropdown__search_self}
+							value={displayValue}
+							autoFocus
+							onChange={handleSearchableSelfChange}
+							placeholder={placeholder}
+							disabled={disabled}
+							readOnly={readonly}
+							onClick={handleSearchableSelfClick}
+						/>
+					) : (
+						<p className={shouldShowPlaceholder ? styles.dropdown__placeholder : ''}>{displayValue}</p>
+					)}
 
-						<div className={styles.dropdown__items}>
-							{hasResults ? (
-								filteredItems.map((item, index) => (
-									<div
-										key={`${item.value}-${index}`}
-										className={getItemClasses(item)}
-										onClick={e => handleItemSelect(e, item)}
-										role="option"
-										aria-selected={isItemActive(item)}
-										tabIndex={item.disabled ? -1 : 0}
-									>
-										<p>{item.label}</p>
+					{countable && checkedCount > 0 && <div className={styles.dropdown__count}>{checkedCount}</div>}
 
-										{checkable && (
-											<div
-												className={styles.dropdown__item_append_icon}
-												onClick={e => handleCheckboxClick(e, item)}
-											>
-												<Icon name={item.checked ? 'checkBox' : 'checkBoxOutline'} />
-											</div>
-										)}
-									</div>
-								))
-							) : (
-								<div className={styles.dropdown__no_results}>
-									<p>No results found</p>
+					{!disabled && <Icon onClick={handleChevronClick} name="chevron" />}
+				</div>
+
+				{showDropdown && (
+					<div
+						className={styles.dropdown__menu}
+						ref={dropdownMenuRef}
+						style={{ width: menuWidth }}
+						role="listbox"
+					>
+						<div className={styles.dropdown__list}>
+							{searchable && !searchableSelf && (
+								<div className={styles.dropdown__search}>
+									<input
+										type="text"
+										value={search}
+										placeholder="Search..."
+										onChange={handleRegularSearchChange}
+										autoFocus
+									/>
 								</div>
 							)}
+
+							<div className={styles.dropdown__items}>
+								{hasResults ? (
+									filteredItems.map((item, index) => (
+										<div
+											key={`${item.value}-${index}`}
+											className={getItemClasses(item)}
+											onClick={e => handleItemSelect(e, item)}
+											role="option"
+											aria-selected={isItemActive(item)}
+											tabIndex={item.disabled ? -1 : 0}
+										>
+											<p>{item.label}</p>
+
+											{checkable && (
+												<div
+													className={styles.dropdown__item_append_icon}
+													onClick={e => handleCheckboxClick(e, item)}
+												>
+													<Icon name={item.checked ? 'checkBox' : 'checkBoxOutline'} />
+												</div>
+											)}
+										</div>
+									))
+								) : (
+									<div className={styles.dropdown__no_results}>
+										<p>No results found</p>
+									</div>
+								)}
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
+				)}
+			</div>
 		</div>
 	)
 }

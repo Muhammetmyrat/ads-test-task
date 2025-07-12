@@ -1,6 +1,4 @@
 .nav {
-	position: relative;
-
 	&__burger {
 		width: 36px;
 		height: 36px;
@@ -11,9 +9,13 @@
 		background: transparent;
 		border: none;
 		padding: 0;
-		position: relative;
-		z-index: 1000;
-		display: none;
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		right: 10px;
+		z-index: 1002;
+		top: 50%;
+		transform: translateY(-50%);
 
 		span {
 			position: relative;
@@ -49,17 +51,20 @@
 				background-color: transparent;
 
 				&::before {
-					transform: rotate(45deg) translate(6px, 6px);
+					transform: rotate(45deg);
+					top: 0;
 				}
 
 				&::after {
-					transform: rotate(-45deg) translate(6px, -6px);
+					transform: rotate(-45deg);
+					top: 0;
 				}
 			}
 		}
 
 		@media screen and (max-width: $mobile) {
-			display: block;
+			opacity: 1;
+			visibility: visible;
 		}
 	}
 

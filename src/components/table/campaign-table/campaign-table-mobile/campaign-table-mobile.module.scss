@@ -19,7 +19,6 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
 
 		&:not(:first-child) {
 			border-top: 1px solid var(--colors-stroke-primary);
@@ -27,6 +26,7 @@
 	}
 
 	&__card-header {
+		width: 100%;
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
@@ -51,24 +51,57 @@
 	}
 
 	&__card-toggle {
+		transition: all 0.3s ease;
+
 		&:hover {
 			color: var(--base-accent-primary-500);
+		}
+
+		&[aria-expanded='true'] {
+			span {
+				transform: rotate(180deg);
+				-webkit-transform: rotate(180deg);
+				-moz-transform: rotate(180deg);
+				-ms-transform: rotate(180deg);
+				-o-transform: rotate(180deg);
+			}
 		}
 	}
 
 	&__card-body {
+		width: 100%;
+		display: grid;
+		grid-template-rows: 0fr;
+		overflow: hidden;
+		transition: all 0.2s ease-in-out;
+		-webkit-transition: all 0.2s ease-in-out;
+		-moz-transition: all 0.2s ease-in-out;
+		-ms-transition: all 0.2s ease-in-out;
+		-o-transition: all 0.2s ease-in-out;
+
+		&--active {
+			grid-template-rows: 1fr;
+			margin-top: 12px;
+		}
+	}
+
+	&__card-list {
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+		width: 100%;
+		min-height: 0;
 	}
 
 	&__card-content {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
 	}
 
 	&__card-row {
+		width: 100%;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

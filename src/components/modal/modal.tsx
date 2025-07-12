@@ -67,7 +67,7 @@ const Modal: React.FC<ModalProps> = ({
 				)}
 			</div>
 		</div>,
-		document.body
+		document.getElementById('root')!
 	)
 }
 
