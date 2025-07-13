@@ -4,9 +4,9 @@
 
 // Обнуление и обшие параметры =======================================================================================================
 @use './base/fonts';
-@use './base/null' as *;
-@use './base/variables' as *;
-@use './base/common' as *;
+@use './base/null';
+@use './base/variables';
+@use './base/common';
 
 body {
 	line-height: 1;
@@ -21,41 +21,18 @@ body {
 	scroll-snap-type: y mandatory;
 	color: $mainColor;
 
+	&._lock {
+		position: fixed;
+		width: 100%;
+		-ms-touch-action: none;
+		touch-action: none;
+		top: 0;
+		overflow-x: hidden;
+	}
+
 	&::selection {
 		color: var(--base-neutral-white);
 		background-color: var(--base-accent-primary-500);
-	}
-
-	#root {
-		height: 100dvh;
-		min-width: 0;
-		display: flex;
-		flex-direction: column;
-		overflow-x: hidden;
-
-		&::-webkit-scrollbar {
-			width: 12px;
-
-			@media screen and (max-width: $mobileSmall) {
-				width: 10px;
-			}
-		}
-
-		&::-webkit-scrollbar-track {
-			background: var(--colors-fill-secondary);
-			padding: 4px;
-		}
-
-		&::-webkit-scrollbar-thumb {
-			background: var(--base-accent-primary-500);
-			border-radius: 10px;
-			border: 2px solid var(--colors-fill-secondary);
-		}
-
-		&::-moz-selection {
-			color: var(--base-neutral-white);
-			background-color: var(--base-accent-primary-500);
-		}
 	}
 
 	main {

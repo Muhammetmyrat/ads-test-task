@@ -7,32 +7,34 @@ import styles from './header.module.scss'
 const Header: React.FC = () => {
 	const [isSticky, setIsSticky] = useState(false)
 	const headerHeight = 90
+	const spacerRef = useRef<HTMLDivElement>(null)
+
+	const handleScroll = () => {
+		const scrollY = window.scrollY || window.pageYOffset
+		const threshold = headerHeight
+		console.log(threshold)
+
+		if (scrollY > threshold) {
+			setIsSticky(true)
+		} else if (scrollY === 0) {
+			setIsSticky(false)
+		}
+	}
+
+	const throttledScroll = () => {
+		requestAnimationFrame(handleScroll)
+	}
 
 	useEffect(() => {
-		const root = document.getElementById('root')
-		if (!root) return
-
-		const handleScroll = () => {
-			const scrollTop = root.scrollTop
-
-			if (scrollTop > headerHeight) {
-				setIsSticky(true)
-			} else if (scrollTop === 0) {
-				setIsSticky(false)
-			}
-		}
-
-		root.addEventListener('scroll', handleScroll)
-		return () => {
-			root.removeEventListener('scroll', handleScroll)
-		}
+		window.addEventListener('scroll', throttledScroll)
+		return () => window.removeEventListener('scroll', throttledScroll)
 	}, [])
 
 	const spacerHeight = isSticky ? headerHeight : 0
 
 	return (
 		<header className={styles.header}>
-			<div className={styles.header__spacer} style={{ height: `${spacerHeight}px` }} />
+			<div ref={spacerRef} className={styles.header__spacer} style={{ height: `${spacerHeight}px` }} />
 			<div
 				className={classNames(styles.header__wrapper, {
 					[styles['header__wrapper--sticky']]: isSticky

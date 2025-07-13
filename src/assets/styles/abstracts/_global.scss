@@ -24,9 +24,7 @@ $containerPadding: 32;
 $containerWidth: $maxWidthContainer + $containerPadding;
 
 // Брейк - поинты
-$pc: em(
-  $containerWidth
-); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
+$pc: em($containerWidth); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
 $laptop: em(1279.98);
 $table: em(991.98); // Планшеты, некоторые телефоны в горизонтальном положении
 $mobile: em(768.98); // Телефоны L
@@ -35,19 +33,19 @@ $mobileSmall: em(479.98); // Телефоны S
 $invalid-animation-name: invalid;
 
 @keyframes #{$invalid-animation-name} {
-  0% {
-    transform: translateX(0px);
-  }
-  25% {
-    transform: translateX(5px);
-  }
-  50% {
-    transform: translateX(0px);
-  }
-  75% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
+	0% {
+		transform: translateX(0px);
+	}
+	25% {
+		transform: translateX(5px);
+	}
+	50% {
+		transform: translateX(0px);
+	}
+	75% {
+		transform: translateX(-5px);
+	}
+	100% {
+		transform: translateX(0px);
+	}
 }

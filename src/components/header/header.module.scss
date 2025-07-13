@@ -4,12 +4,6 @@
 	box-sizing: border-box;
 	position: relative;
 
-	&__spacer {
-		@media screen and (max-width: $mobile) {
-			height: 0 !important;
-		}
-	}
-
 	&__wrapper {
 		position: relative;
 		z-index: 998;
@@ -18,14 +12,14 @@
 		background: var(--base-neutral-white);
 		box-shadow: 0px 2px 16px 0px #0f233f1f;
 
-		@media screen and (min-width: $mobile) {
-			&--sticky {
-				position: fixed;
-				top: 0;
-				width: calc(100% - 12px);
-				z-index: 999;
-				animation: slideDown 0.4s ease-out;
-			}
+		&--sticky {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 999;
+			animation: slideDown 0.5s ease-out;
+			-webkit-animation: slideDown 0.5s ease-out;
 		}
 	}
 

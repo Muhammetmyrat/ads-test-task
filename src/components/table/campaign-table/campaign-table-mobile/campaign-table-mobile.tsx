@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { removeCampaign } from '@/store/campaign-store'
 import type { Campaign } from '@/store/campaign-store'
@@ -6,14 +6,21 @@ import Button from '@/components/base/button/button'
 import Icon from '@/components/base/icon'
 import styles from './campaign-table-mobile.module.scss'
 import classNames from 'classnames'
-import { useToggle } from '@/context/ToggleContext'
 
 interface CampaignTableMobileProps {
 	campaigns: Campaign[]
 }
 
 const CampaignTableMobile: React.FC<CampaignTableMobileProps> = ({ campaigns }) => {
+	const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({})
 	const dispatch = useDispatch()
+
+	const toggleCard = (id: number) => {
+		setExpandedCards(prev => ({
+			...prev,
+			[id]: !prev[id]
+		}))
+	}
 
 	const handleRemoveCampaign = (id: number) => {
 		dispatch(removeCampaign(id))
@@ -22,7 +29,13 @@ const CampaignTableMobile: React.FC<CampaignTableMobileProps> = ({ campaigns }) 
 	return (
 		<div className={styles['campaign-table__mobile']}>
 			{campaigns.map(campaign => (
-				<CampaignCard key={campaign.id} campaign={campaign} onRemove={handleRemoveCampaign} />
+				<CampaignCard
+					key={campaign.id}
+					campaign={campaign}
+					isExpanded={!!expandedCards[campaign.id]}
+					onToggle={toggleCard}
+					onRemove={handleRemoveCampaign}
+				/>
 			))}
 		</div>
 	)
@@ -30,14 +43,17 @@ const CampaignTableMobile: React.FC<CampaignTableMobileProps> = ({ campaigns }) 
 
 interface CampaignCardProps {
 	campaign: Campaign
+	isExpanded: boolean
+	onToggle: (id: number) => void
 	onRemove: (id: number) => void
 }
 
-const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onRemove }) => {
-	const { isOpen, handleToggle } = useToggle()
-	const toggleKey = `campaign-table-mobile-card-${campaign.id}`
-	const expanded = isOpen(toggleKey)
-
+const CampaignCard: React.FC<CampaignCardProps> = ({
+	campaign,
+	isExpanded,
+	onToggle,
+	onRemove
+}) => {
 	const getStatusClass = (status: Campaign['status']) => {
 		switch (status) {
 			case 'Active':
@@ -55,7 +71,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onRemove }) => {
 
 	return (
 		<div className={styles['campaign-table__card']}>
-			<div className={styles['campaign-table__card-header']} onClick={() => handleToggle(toggleKey)}>
+			<div className={styles['campaign-table__card-header']}>
 				<div className={styles['campaign-table__card-title']}>
 					<h3 className={styles['campaign-table__card-name']}>{campaign.name}</h3>
 					<div className={styles['campaign-table__card-status']}>
@@ -67,7 +83,8 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onRemove }) => {
 				<button
 					className={styles['campaign-table__card-toggle']}
 					aria-label="Toggle campaign details"
-					aria-expanded={expanded}
+					aria-expanded={isExpanded}
+					onClick={() => onToggle(campaign.id)}
 				>
 					<Icon name="chevron" />
 				</button>
@@ -75,7 +92,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onRemove }) => {
 
 			<div
 				className={classNames(styles['campaign-table__card-body'], {
-					[styles['campaign-table__card-body--active']]: expanded
+					[styles['campaign-table__card-body--active']]: isExpanded
 				})}
 			>
 				<div className={styles['campaign-table__card-list']}>

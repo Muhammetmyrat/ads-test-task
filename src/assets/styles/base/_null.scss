@@ -1,7 +1,33 @@
+@use '../abstracts/global' as *;
+@use './variables';
+
 * {
 	padding: 0;
 	margin: 0;
 	border: 0;
+	&::-webkit-scrollbar {
+		width: 12px;
+
+		@media screen and (max-width: $mobileSmall) {
+			width: 10px;
+		}
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--colors-fill-secondary);
+		padding: 4px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--base-accent-primary-500);
+		border-radius: 10px;
+		border: 2px solid var(--colors-fill-secondary);
+	}
+
+	&::-moz-selection {
+		color: var(--base-neutral-white);
+		background-color: var(--base-accent-primary-500);
+	}
 }
 *,
 *::before,
