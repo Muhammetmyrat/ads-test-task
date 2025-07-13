@@ -8,7 +8,7 @@ import { useToggle } from '@/context/ToggleContext'
 const Nav: React.FC = () => {
 	const { navItems } = useNav()
 
-	const { isOpen, handleToggle } = useToggle()
+	const { isOpen, handleToggle, handleClose } = useToggle()
 	const navOpen = isOpen('nav')
 
 	return (
@@ -33,7 +33,7 @@ const Nav: React.FC = () => {
 						<li key={to} className={styles.nav__item}>
 							<NavLink
 								to={to}
-								onClick={() => handleToggle('nav')}
+								onClick={() => navOpen && handleClose('nav')}
 								className={({ isActive }) =>
 									classNames(styles.nav__link, {
 										[styles['nav__link--active']]: isActive
