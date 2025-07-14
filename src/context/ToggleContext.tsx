@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useRef } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 interface ToggleState {
 	[key: string]: boolean
@@ -15,8 +15,6 @@ const ToggleContext = createContext<ToggleContextType | undefined>(undefined)
 
 export const ToggleProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [toggles, setToggles] = useState<ToggleState>({})
-
-	const bodyOverflow = useRef<string>(document.body.style.overflowY)
 
 	const handleOpen = (key: string) => setToggles(prev => ({ ...prev, [key]: true }))
 	const handleClose = (key: string) => setToggles(prev => ({ ...prev, [key]: false }))
