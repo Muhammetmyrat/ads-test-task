@@ -7,7 +7,6 @@ import { useToggle } from '@/context/ToggleContext'
 
 const Nav: React.FC = () => {
 	const { navItems } = useNav()
-
 	const { isOpen, handleToggle, handleClose } = useToggle()
 	const navOpen = isOpen('nav')
 
@@ -20,7 +19,7 @@ const Nav: React.FC = () => {
 				aria-label="Toggle navigation menu"
 				onClick={() => handleToggle('nav')}
 			>
-				<span />
+				<span></span>
 			</button>
 
 			<div
