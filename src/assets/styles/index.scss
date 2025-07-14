@@ -22,12 +22,10 @@ body {
 	color: $mainColor;
 
 	&._lock {
-		position: fixed;
-		width: 100%;
 		-ms-touch-action: none;
 		touch-action: none;
-		top: 0;
-		overflow-x: hidden;
+		overflow: hidden;
+		overscroll-behavior: none;
 	}
 
 	&::selection {

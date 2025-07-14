@@ -25,20 +25,7 @@ export const ToggleProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 	useEffect(() => {
 		const anyOpen = Object.values(toggles).some(v => v)
-
-		if (anyOpen) {
-			const needsScroll = document.body.scrollHeight > window.innerHeight
-			document.body.style.overflowY = needsScroll ? 'scroll' : 'hidden'
-			document.body.classList.add('_lock')
-		} else {
-			document.body.style.overflowY = bodyOverflow.current
-			document.body.classList.remove('_lock')
-		}
-
-		return () => {
-			document.body.style.overflowY = bodyOverflow.current
-			document.body.classList.remove('_lock')
-		}
+		document.body.classList.toggle('_lock', anyOpen)
 	}, [toggles])
 
 	return (
