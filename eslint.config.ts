@@ -8,13 +8,13 @@ import tsPlugin from '@typescript-eslint/eslint-plugin'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-	globalIgnores(['dist', 'node_modules']),
+	globalIgnores(['dist', 'node_modules', 'vite.config.ts', 'eslint.config.ts']),
 	{
 		files: ['**/*.{js,jsx,ts,tsx}'],
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
-				project: ['./tsconfig.json'],
+				project: ['./tsconfig.eslint.json'],
 				ecmaVersion: 'latest',
 				sourceType: 'module'
 			},

@@ -18,6 +18,7 @@
 		}
 	}
 	&__body {
+		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -46,6 +47,10 @@
 	&__terms {
 		display: flex;
 		gap: 16px;
+
+		@media screen and (max-width: $mobileSmall) {
+			flex-direction: column;
+		}
 	}
 
 	&__term {

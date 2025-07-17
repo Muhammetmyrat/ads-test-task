@@ -30,7 +30,7 @@ const defaultCampaigns: Campaign[] = [
 		name: 'Кампания #109973',
 		status: 'Active',
 		cpd: '0.00067627',
-		spendings: '43.12',
+		spendings: '50.12',
 		impressions: '123 456',
 		clicks: '9 456',
 		ctr: '0.5%'
@@ -40,7 +40,7 @@ const defaultCampaigns: Campaign[] = [
 		name: 'Длинное название кампании #109974',
 		status: 'Warning',
 		cpd: '0.00067627',
-		spendings: '43.12',
+		spendings: '49.12',
 		impressions: '123 456',
 		clicks: '9 456',
 		ctr: '0.5%'
@@ -50,7 +50,7 @@ const defaultCampaigns: Campaign[] = [
 		name: 'Кампания #109975',
 		status: 'Paused',
 		cpd: '0.00067627',
-		spendings: '43.12',
+		spendings: '48.12',
 		impressions: '123 456',
 		clicks: '9 456',
 		ctr: '0.5%'
@@ -60,7 +60,7 @@ const defaultCampaigns: Campaign[] = [
 		name: 'Кампания #109976',
 		status: 'Active',
 		cpd: '0.00067627',
-		spendings: '43.12',
+		spendings: '47.12',
 		impressions: '123 456',
 		clicks: '9 456',
 		ctr: '0.5%'
@@ -70,7 +70,7 @@ const defaultCampaigns: Campaign[] = [
 		name: 'Кампания #109977',
 		status: 'Active',
 		cpd: '0.00067627',
-		spendings: '43.12',
+		spendings: '46.12',
 		impressions: '123 456',
 		clicks: '9 456',
 		ctr: '0.5%'
@@ -80,7 +80,7 @@ const defaultCampaigns: Campaign[] = [
 		name: 'Кампания #109978',
 		status: 'Active',
 		cpd: '0.00067627',
-		spendings: '43.12',
+		spendings: '45.12',
 		impressions: '123 456',
 		clicks: '9 456',
 		ctr: '0.5%'
@@ -90,7 +90,7 @@ const defaultCampaigns: Campaign[] = [
 		name: 'Кампания #109979',
 		status: 'Active',
 		cpd: '0.00067627',
-		spendings: '43.12',
+		spendings: '44.12',
 		impressions: '123 456',
 		clicks: '9 456',
 		ctr: '0.5%'
@@ -144,6 +144,7 @@ const sortCampaigns = (
 
 		if (aValue < bValue) return direction === 'asc' ? -1 : 1
 		if (aValue > bValue) return direction === 'asc' ? 1 : -1
+
 		return 0
 	})
 }
